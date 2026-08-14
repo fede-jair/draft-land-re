@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agente IA para inmobiliarias | Cliengo</title>
+<meta name="description" content="Un agente conversacional que atiende las consultas de tu inmobiliaria 24/7, conoce tu cartera de propiedades y agenda visitas. Conectado a tu CRM, en WhatsApp, Instagram y tu sitio web.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 410 410'%3E%3Cpath fill='%237F44F8' d='M8.4,205C8.4,86.7,96.6,8.4,205,8.4s196.6,78.3,196.6,196.6-88.1,196.6-196.6,196.6S8.4,319.7,8.4,205Z'/%3E%3Cpath fill='%23fff' d='M67.6,157.8c-8.7,5.7-9.9,14.9-3.3,25.1,50.2,78,75.6,119.8,81.5,129.9,17.9,29.3,35.5,37.6,61.2,37.6s49.3-8.1,68.1-23.6c18.8-15.5,32-41.5,32.6-66.9,0-9,3.3-20,6-25.7,5.7-12.2,14.3-21.8,23.9-31.1,9.6-9.3,18.2-19.7,9.3-33.8-5.7-9-15.2-13.4-26.9-14.3s-19.4,2.7-27.5,8.4c-9.9,6.9-16.1,12.5-23,26.9-6.9,14.3,0,9.6,1.8,10.5,1.8.9,5.7.9,9.3-4.5,3.6-5.4,5.1-9.3,9.3-14.6,8.4-10.5,16.7-14,26.3-15.2s19.4,7.5,19.7,12.2c.3,4.8,0,7.5-9.3,16.4-10.8,10.5-20.3,20-26.9,32.9-6.6,12.8-7.2,19.7-7.2,30.2-.6,21.8-9.9,42.7-27.2,57.7-17.3,14.9-37.9,21.5-60,21.5s-31.1-1.5-43.6-25.1c-12.5-23.6-8.1-30.8-2.4-43.3,8.1-18.8,24.2-31.4,44.5-38.8,8.4-3.3,18.2-4.5,27.5-5.4.3,0,.9,0,1.2.3,0,0,.3.6.3.9v13.1h0c-.3,12.2,9.9,22.7,23,23.9,10.5,0,19.7-6,23-14.9,3.6-10.2,0-21.5-9.6-27.8-5.7-4.2-12.2-7.2-19.4-8.7-.6,0-.9-.6-.9-1.2,0-1.8,5.7-114.1,5.7-114.1.6-12.5-7.2-21.8-20-23-12.8,0-22.4,7.5-23.6,19.4l-5.4,52.6-17.9-66c-4.2-15.5-13.4-21.8-26.9-18.5-13.4,3.3-17.6,14.3-15.2,27.5l19.1,78.6-31.4-51.1c-6.9-11.6-17.9-15.5-29.3-11.1-10.8,4.2-15.8,14.3-12.2,23.6,3.9,10.8,33.2,67.8,33.2,67.8l-28.4-34.4c-7.5-9.3-18.8-10.5-29-3.9h0Z'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&display=block" rel="stylesheet">
+<style>
+/* ============ tokens ============ */
+:root{
+  --bg:#F9F8F6;
+  --surface:#FFFFFF;
+  --surface-alt:#F4F3F1;
+  --ink:#1B1B18;
+  --ink-2:#55544E;
+  --ink-3:#8A8880;
+  --line:#E6E4E0;
+  --purple:#7F44F8;
+  --purple-dark:#6A2BE8;
+  --purple-tint:#F3EDFF;
+  --wa:#25D366;
+  --wa-deep:#075F55;
+  --wa-chat:#EDE7DF;
+  --tint-blue:#EFF5FB;
+  --tint-green:#E8F7EE;
+  --r-sm:10px;
+  --r:14px;
+  --r-lg:20px;
+  --shadow:0 1px 2px rgba(27,27,24,.04), 0 8px 24px -12px rgba(27,27,24,.10);
+  --shadow-lg:0 2px 4px rgba(27,27,24,.04), 0 24px 60px -24px rgba(27,27,24,.22);
+  --font:"DM Sans",system-ui,sans-serif;
+  --font-ui:"Inter",system-ui,sans-serif;
+  --maxw:1120px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:var(--font);font-size:17px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{margin:0;font-weight:700;letter-spacing:-.025em;line-height:1.1}
+p{margin:0}
+a{color:inherit}
+img{max-width:100%}
+.msym{
+  font-family:'Material Symbols Rounded';font-weight:400;font-style:normal;
+  line-height:1;letter-spacing:normal;text-transform:none;white-space:nowrap;
+  direction:ltr;-webkit-font-feature-settings:'liga';font-feature-settings:'liga';
+  -webkit-font-smoothing:antialiased;user-select:none;
+}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+.eyebrow{
+  font-family:var(--font-ui);font-size:11.5px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
+}
+.lede{font-size:19px;color:var(--ink-2);line-height:1.55}
+:focus-visible{outline:2.5px solid var(--purple);outline-offset:3px;border-radius:4px}
+
+/* ============ buttons ============ */
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--font);font-size:16px;font-weight:600;
+  padding:14px 24px;border-radius:var(--r-sm);border:0;
+  text-decoration:none;cursor:pointer;
+  transition:background .18s ease, transform .18s ease, box-shadow .18s ease;
+}
+.btn--primary{background:var(--purple);color:#fff;box-shadow:0 8px 20px -10px rgba(127,68,248,.7)}
+.btn--primary:hover{background:var(--purple-dark);transform:translateY(-1px)}
+.btn--ghost{background:transparent;color:var(--ink);border:1px solid var(--line);font-weight:500}
+.btn--ghost:hover{background:var(--surface)}
+.btn .msym{font-size:20px}
+
+/* ============ nav ============ */
+.nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(249,248,246,.85);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--line);
+}
+.nav__in{max-width:var(--maxw);margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:16px}
+.logo{display:flex;align-items:center;text-decoration:none;color:var(--ink)}
+.logo__svg{height:32px;width:auto;display:block}
+.logo-sprite{position:absolute;width:0;height:0;overflow:hidden}
+.final__logo{height:30px;width:auto;display:block;margin:0 auto 26px}
+.nav__tag{
+  font-family:var(--font-ui);font-size:12px;font-weight:500;color:var(--ink-2);
+  padding:4px 9px;border:1px solid var(--line);border-radius:999px;background:var(--surface);
+}
+.nav__cta{margin-left:auto}
+.nav__cta .btn{padding:9px 16px;font-size:14px}
+
+/* ============ hero ============ */
+.hero{padding:64px 0 8px}
+.hero__grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:start}
+.hero h1{font-size:clamp(32px,3.7vw,46px);margin:18px 0 20px;max-width:22ch}
+.hero h1 em{font-style:normal;color:var(--purple)}
+.hero__lede{max-width:33ch}
+.hero__cta{margin-top:30px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.hero__note{
+  font-family:var(--font-ui);font-size:13px;color:var(--ink-3);
+  margin-top:14px;display:flex;align-items:center;gap:6px;
+}
+.hero__note .msym{font-size:16px;color:var(--wa)}
+.hero__facts{
+  margin-top:36px;padding-top:26px;border-top:1px solid var(--line);
+  display:grid;grid-template-columns:1fr 1fr;gap:22px;
+}
+.fact{display:flex;gap:11px;align-items:flex-start}
+.fact .msym{font-size:21px;color:var(--purple);flex:0 0 auto;margin-top:2px}
+.fact b{display:block;font-size:15px;font-weight:600;letter-spacing:-.01em}
+.fact span{font-size:14px;color:var(--ink-2);line-height:1.45}
+
+/* ============ chat player (signature) ============ */
+.player{position:relative}
+.player__tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.tab{
+  font-family:var(--font-ui);font-size:12.5px;font-weight:500;
+  padding:6px 12px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);cursor:pointer;
+  transition:all .16s ease;
+}
+.tab:hover{color:var(--ink);border-color:#D5D2CC}
+.tab[aria-selected="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.phone{
+  background:var(--wa-chat);border-radius:var(--r-lg);
+  border:1px solid rgba(27,27,24,.10);box-shadow:var(--shadow-lg);
+  overflow:hidden;
+}
+.phone__bar{
+  background:var(--wa-deep);color:#fff;padding:12px 16px;
+  display:flex;align-items:center;gap:11px;
+}
+.phone__av{
+  width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.16);
+  display:grid;place-items:center;flex:0 0 auto;
+}
+.phone__av .msym{font-size:19px}
+.phone__who{font-size:14.5px;font-weight:600;letter-spacing:-.01em}
+.phone__st{font-family:var(--font-ui);font-size:11.5px;opacity:.72;display:flex;align-items:center;gap:5px}
+.phone__st i{width:6px;height:6px;border-radius:50%;background:var(--wa);display:inline-block}
+.phone__ch{margin-left:auto;font-family:var(--font-ui);font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;opacity:.7}
+.thread{
+  height:560px;overflow:hidden;padding:18px 16px 16px;
+  display:flex;flex-direction:column;gap:8px;justify-content:flex-end;
+}
+.msg{
+  max-width:83%;padding:9px 13px;border-radius:14px;font-size:14.5px;line-height:1.45;
+  animation:pop .34s cubic-bezier(.2,.9,.3,1) both;
+}
+.msg--bot{background:#fff;border-bottom-left-radius:5px;align-self:flex-start;box-shadow:0 1px 1px rgba(27,27,24,.07)}
+.msg--user{background:#D6F5C8;border-bottom-right-radius:5px;align-self:flex-end;box-shadow:0 1px 1px rgba(27,27,24,.07)}
+.msg small{display:block;font-family:var(--font-ui);font-size:11px;color:var(--ink-3);margin-top:4px}
+.msg__url{display:block;font-family:var(--font-ui);font-size:12px;color:#2A6FA8;word-break:break-all;margin-bottom:5px;text-decoration:underline;text-decoration-color:rgba(42,111,168,.35)}
+@keyframes pop{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:none}}
+.typing{
+  align-self:flex-start;background:#fff;border-radius:14px;border-bottom-left-radius:5px;
+  padding:12px 14px;display:flex;gap:4px;box-shadow:0 1px 1px rgba(27,27,24,.07);
+  animation:pop .2s ease both;
+}
+.typing i{width:6px;height:6px;border-radius:50%;background:#B9B7B0;animation:blink 1.1s infinite}
+.typing i:nth-child(2){animation-delay:.18s}
+.typing i:nth-child(3){animation-delay:.36s}
+@keyframes blink{0%,60%,100%{opacity:.28;transform:translateY(0)}30%{opacity:1;transform:translateY(-2px)}}
+/* property card inside chat */
+.pcards{align-self:flex-start;max-width:88%;display:flex;flex-direction:column;gap:6px;animation:pop .34s cubic-bezier(.2,.9,.3,1) both}
+.pcard{
+  background:#fff;border-radius:12px;padding:8px;display:flex;gap:10px;align-items:center;
+  box-shadow:0 1px 1px rgba(27,27,24,.07);
+}
+.pcard__im{
+  width:52px;height:52px;border-radius:9px;flex:0 0 auto;display:grid;place-items:center;
+  background:linear-gradient(150deg,#EDEAFF,#DCF3E7);color:var(--wa-deep);
+}
+.pcard__im .msym{font-size:24px}
+.pcard__t{font-size:13.5px;font-weight:600;letter-spacing:-.01em;line-height:1.25}
+.pcard__p{font-family:var(--font-ui);font-size:13px;font-weight:600;color:var(--wa-deep);margin-top:2px}
+.pcard__m{font-family:var(--font-ui);font-size:11.5px;color:var(--ink-3);margin-top:1px}
+/* calendar slots inside chat */
+.slots{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.slot{
+  font-family:var(--font-ui);font-size:12.5px;font-weight:500;
+  padding:5px 11px;border-radius:8px;background:var(--purple-tint);color:var(--purple-dark);
+}
+.slot--on{background:var(--purple);color:#fff}
+.player__cap{
+  font-family:var(--font-ui);font-size:12.5px;color:var(--ink-3);
+  margin-top:12px;display:flex;align-items:center;gap:7px;
+}
+.player__cap .msym{font-size:15px}
+
+/* ============ sections ============ */
+section{scroll-margin-top:80px}
+.sec{padding:88px 0}
+.sec--alt{background:var(--surface-alt);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.sec__head{max-width:640px;margin-bottom:44px}
+.sec__head h2{font-size:clamp(27px,3.1vw,38px);margin:14px 0 14px}
+.sec__head--center{margin-left:auto;margin-right:auto;text-align:center}
+
+/* problem */
+.prob{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.pcell{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:24px}
+.pcell .msym{font-size:26px;color:var(--purple);margin-bottom:14px;display:block}
+.pcell h3{font-size:18px;margin-bottom:8px}
+.pcell p{font-size:15px;color:var(--ink-2);line-height:1.5}
+.stat{
+  margin-top:26px;background:var(--ink);color:#fff;border-radius:var(--r);
+  padding:30px 34px;display:flex;gap:34px;align-items:center;flex-wrap:wrap;
+}
+.stat__n{font-size:52px;font-weight:700;letter-spacing:-.04em;line-height:1}
+.stat__x{max-width:44ch;font-size:16.5px;color:rgba(255,255,255,.78);line-height:1.5}
+.stat__src{font-family:var(--font-ui);font-size:11.5px;color:rgba(255,255,255,.45);margin-top:8px}
+
+/* paths / what it handles */
+.paths{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--surface)}
+.path{padding:26px 28px;border-bottom:1px solid var(--line);border-right:1px solid var(--line)}
+.path:nth-child(2n){border-right:0}
+.path:nth-last-child(-n+2){border-bottom:0}
+.path__h{display:flex;align-items:center;gap:11px;margin-bottom:10px}
+.path__h .msym{font-size:22px;color:var(--purple)}
+.path__h h3{font-size:17.5px}
+.path p{font-size:15px;color:var(--ink-2);line-height:1.5}
+.path q{
+  display:block;font-family:var(--font-ui);font-size:13.5px;color:var(--ink-3);
+  margin-top:12px;padding-left:12px;border-left:2px solid var(--line);font-style:normal;
+}
+.path q:before,.path q:after{content:'"'}
+
+/* two-col feature blocks */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.duo--flip .duo__fig{order:-1}
+.duo h2{font-size:clamp(25px,2.7vw,33px);margin:14px 0 16px}
+.duo p{font-size:16.5px;color:var(--ink-2);margin-bottom:14px}
+.checks{list-style:none;padding:0;margin:22px 0 0;display:grid;gap:11px}
+.checks li{display:flex;gap:10px;font-size:15.5px;color:var(--ink)}
+.checks .msym{font-size:19px;color:var(--wa);flex:0 0 auto;margin-top:1px}
+
+/* crm chips */
+.crm{display:flex;flex-wrap:wrap;gap:9px}
+.chip{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-sm);
+  padding:11px 15px;font-size:15px;font-weight:600;letter-spacing:-.01em;
+  display:flex;align-items:center;gap:8px;
+}
+.chip .msym{font-size:17px;color:var(--wa)}
+.chip--open{background:var(--purple-tint);border-color:transparent;color:var(--purple-dark)}
+.chip--open .msym{color:var(--purple-dark)}
+
+/* widget mock */
+.mock{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  box-shadow:var(--shadow);overflow:hidden;
+}
+.mock__bar{padding:9px 12px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:7px;background:var(--surface-alt)}
+.mock__dot{width:9px;height:9px;border-radius:50%;background:#D9D6D0}
+.mock__url{
+  margin-left:6px;font-family:var(--font-ui);font-size:11.5px;color:var(--ink-3);
+  background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:3px 10px;
+}
+.mock__body{padding:16px 16px 124px;position:relative}
+.mock__hero{height:110px;border-radius:10px;background:linear-gradient(150deg,#EDEAFF,#DCF3E7);display:grid;place-items:center;color:var(--wa-deep)}
+.mock__hero .msym{font-size:40px;opacity:.55}
+.mock__t{font-size:16px;font-weight:700;letter-spacing:-.02em;margin-top:14px}
+.mock__p{font-family:var(--font-ui);font-size:15px;font-weight:600;color:var(--wa-deep);margin-top:3px}
+.mock__meta{display:flex;gap:14px;margin-top:10px;font-family:var(--font-ui);font-size:12px;color:var(--ink-3)}
+.mock__meta span{display:flex;align-items:center;gap:4px}
+.mock__meta .msym{font-size:15px}
+.bubble{
+  position:absolute;right:16px;bottom:16px;max-width:74%;
+  background:#fff;border:1px solid var(--line);border-radius:14px;border-bottom-right-radius:5px;
+  padding:11px 13px;font-size:14px;line-height:1.45;box-shadow:var(--shadow);
+}
+.bubble--u{background:#D6F5C8;border-color:transparent;font-weight:500;max-width:44%;bottom:auto;top:96px}
+.bubble b{color:var(--purple-dark)}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;counter-reset:s}
+.step{position:relative;padding-top:20px;border-top:2px solid var(--ink)}
+.step__n{font-family:var(--font-ui);font-size:12px;font-weight:600;color:var(--ink-3);letter-spacing:.1em}
+.step h3{font-size:19px;margin:10px 0 8px}
+.step p{font-size:15px;color:var(--ink-2);line-height:1.5}
+
+/* inbox mock */
+.ibx__row{display:flex;gap:11px;align-items:center;padding:13px 14px;border-bottom:1px solid var(--line)}
+.ibx__row:last-child{border-bottom:0}
+.ibx__row--sel{background:var(--purple-tint);box-shadow:inset 3px 0 0 var(--purple)}
+.ibx__av{width:32px;height:32px;border-radius:50%;background:var(--surface-alt);display:grid;place-items:center;flex:0 0 auto;color:var(--ink-3)}
+.ibx__av .msym{font-size:18px}
+.ibx__n{font-size:14.5px;font-weight:600;letter-spacing:-.01em;display:flex;align-items:center;gap:7px}
+.ibx__ch{font-family:var(--font-ui);font-size:10.5px;font-weight:500;color:var(--ink-3);border:1px solid var(--line);border-radius:5px;padding:1px 5px}
+.ibx__s{font-family:var(--font-ui);font-size:12.5px;color:var(--ink-2);margin-top:2px}
+.ibx__tag{margin-left:auto;font-family:var(--font-ui);font-size:11px;font-weight:600;padding:4px 9px;border-radius:999px;white-space:nowrap}
+.ibx__tag--ok{background:var(--tint-green);color:var(--wa-deep)}
+.ibx__tag--new{background:var(--tint-blue);color:#2A6FA8}
+.ibx__tag--cap{background:var(--purple-tint);color:var(--purple-dark)}
+.ibx__foot{border-top:1px solid var(--line);padding:12px 14px;display:flex;align-items:center;gap:12px;background:var(--surface-alt);flex-wrap:wrap}
+.ibx__btn{font-family:var(--font);font-size:13.5px;font-weight:600;background:var(--ink);color:#fff;border:0;border-radius:8px;padding:9px 14px;display:inline-flex;align-items:center;gap:7px;cursor:pointer}
+.ibx__btn .msym{font-size:16px}
+.ibx__hint{font-family:var(--font-ui);font-size:12px;color:var(--ink-3)}
+.arranca{margin-top:64px;padding-top:44px;border-top:1px solid var(--line)}
+.arranca__h{font-size:clamp(21px,2.2vw,27px);margin:12px 0 32px;max-width:32ch}
+
+/* channels */
+.chan{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.chan__i{
+  display:flex;align-items:center;gap:9px;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--r-sm);padding:13px 17px;
+}
+.chan__i b{font-size:15.5px;font-weight:600;letter-spacing:-.01em}
+.chan__i small{font-family:var(--font-ui);font-size:11.5px;color:var(--ink-3);display:block;margin-top:1px}
+.chan__i .msym{font-size:20px;color:var(--ink-2)}
+.chan__i--hi{border-color:var(--wa);background:var(--tint-green)}
+.chan__i--hi .msym{color:var(--wa-deep)}
+
+/* config grid */
+.cfg{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.cfg__c{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px}
+.cfg__c .msym{font-size:23px;color:var(--purple);display:block;margin-bottom:12px}
+.cfg__c h3{font-size:16.5px;margin-bottom:7px}
+.cfg__c p{font-size:14.5px;color:var(--ink-2);line-height:1.5}
+
+/* pricing */
+.price{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;align-items:start}
+.plan{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  padding:26px 22px;display:flex;flex-direction:column;height:100%;
+}
+.plan--hi{border:1.5px solid var(--purple);box-shadow:0 20px 50px -28px rgba(131,68,248,.5);position:relative}
+.plan__flag{
+  position:absolute;top:-11px;left:22px;background:var(--purple);color:#fff;
+  font-family:var(--font-ui);font-size:10.5px;font-weight:600;letter-spacing:.09em;
+  text-transform:uppercase;padding:4px 10px;border-radius:6px;
+}
+.plan__n{font-family:var(--font-ui);font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.plan__tot{font-size:40px;font-weight:700;letter-spacing:-.04em;margin-top:14px;line-height:1}
+.plan__tot small{font-size:15px;font-weight:500;color:var(--ink-3);letter-spacing:0}
+.plan__calc{
+  font-family:var(--font-ui);font-size:12.5px;color:var(--ink-2);margin-top:12px;
+  padding:9px 11px;background:var(--surface-alt);border-radius:8px;line-height:1.5;
+}
+.plan__calc span{color:var(--purple-dark);font-weight:600}
+.plan ul{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:9px}
+.plan li{display:flex;gap:8px;font-size:14.5px;color:var(--ink-2);line-height:1.4}
+.plan li .msym{font-size:17px;color:var(--wa);flex:0 0 auto;margin-top:1px}
+.price__fine{
+  margin-top:22px;font-family:var(--font-ui);font-size:13px;color:var(--ink-3);
+  display:grid;gap:6px;text-align:center;
+}
+.price__fine div{display:flex;gap:7px;align-items:flex-start;justify-content:center}
+.price__fine .msym{font-size:16px;margin-top:1px}
+
+/* faq */
+.faq{max-width:760px;margin:0 auto}
+details{border-bottom:1px solid var(--line);padding:20px 0}
+details:first-of-type{border-top:1px solid var(--line)}
+summary{
+  cursor:pointer;font-size:18px;font-weight:600;letter-spacing:-.02em;
+  display:flex;align-items:center;gap:12px;list-style:none;
+}
+summary::-webkit-details-marker{display:none}
+summary .msym{font-size:20px;color:var(--purple);transition:transform .2s ease;margin-left:auto}
+details[open] summary .msym{transform:rotate(45deg)}
+details p{font-size:16px;color:var(--ink-2);margin-top:12px;padding-right:32px;line-height:1.55}
+
+/* final cta */
+.final{background:var(--ink);color:#fff;padding:88px 0;text-align:center}
+.final h2{font-size:clamp(28px,3.4vw,42px);max-width:22ch;margin:0 auto 18px}
+.final p{font-size:18px;color:rgba(255,255,255,.72);max-width:52ch;margin:0 auto 30px}
+.final .btn--primary{background:#fff;color:var(--ink);box-shadow:none}
+.final .btn--primary:hover{background:#EDEAFF}
+.trust{
+  margin-top:36px;padding-top:26px;border-top:1px solid rgba(255,255,255,.14);
+  display:flex;flex-wrap:wrap;gap:26px;justify-content:center;
+  font-family:var(--font-ui);font-size:13px;color:rgba(255,255,255,.6);
+}
+.trust span{display:flex;align-items:center;gap:7px}
+.trust .msym{font-size:17px;color:var(--wa)}
+footer{padding:30px 0;font-family:var(--font-ui);font-size:13px;color:var(--ink-3)}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+/* ============ responsive ============ */
+@media (max-width:1000px){
+  .hero__grid,.duo{grid-template-columns:1fr;gap:40px}
+  .duo--flip .duo__fig{order:0}
+  .cfg,.price{grid-template-columns:repeat(2,1fr)}
+  .prob,.steps{grid-template-columns:1fr}
+  .plan--hi{order:-1}
+}
+@media (max-width:640px){
+  body{font-size:16px}
+  .sec{padding:60px 0}
+  .hero{padding:40px 0 0}
+  .hero__facts,.paths,.cfg,.price{grid-template-columns:1fr}
+  .path{border-right:0}
+  .thread{height:460px}
+  .mock__body{padding-bottom:150px}
+  .stat{padding:24px;gap:18px}
+  .stat__n{font-size:42px}
+  .nav__tag{display:none}
+  .wrap{padding:0 18px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+}
+</style>
+</head>
+<body>
+
+<!-- ========== logo oficial Cliengo: iso púrpura + wordmark en currentColor ========== -->
+<svg class="logo-sprite" aria-hidden="true" focusable="false">
+  <symbol id="cliengo-logo" viewBox="0 0 730 190">
+    <path fill="#7F44F8" d="M4.8,88.3C4.8,37.4,42.8,3.8,89.4,3.8s84.5,33.7,84.5,84.5-37.9,84.5-84.5,84.5S4.8,137.7,4.8,88.3Z"/>
+    <path fill="#fff" d="M30.3,68c-3.7,2.4-4.2,6.4-1.4,10.8,21.6,33.5,32.5,51.5,35.1,55.9,7.7,12.6,15.3,16.2,26.3,16.2s21.2-3.5,29.3-10.2c8.1-6.7,13.7-17.9,14-28.8,0-3.9,1.4-8.6,2.6-11,2.4-5.3,6.2-9.4,10.3-13.4,4.1-4,7.8-8.5,4-14.5-2.4-3.9-6.6-5.8-11.6-6.2s-8.4,1.2-11.8,3.6c-4.2,3-6.9,5.4-9.9,11.6-3,6.2,0,4.1.8,4.5s2.4.4,4-1.9c1.5-2.3,2.2-4,4-6.3,3.6-4.5,7.2-6,11.3-6.6s8.4,3.2,8.5,5.3,0,3.2-4,7.1c-4.6,4.5-8.7,8.6-11.6,14.1-2.8,5.5-3.1,8.5-3.1,13-.3,9.4-4.2,18.4-11.7,24.8-7.5,6.4-16.3,9.3-25.8,9.3s-13.4-.6-18.8-10.8c-5.4-10.2-3.5-13.2-1-18.6,3.5-8.1,10.4-13.5,19.1-16.7,3.6-1.4,7.8-1.9,11.8-2.3.1,0,.4,0,.5.1,0,0,.1.3.1.4v5.7h0c-.1,5.3,4.2,9.8,9.9,10.3,4.5,0,8.5-2.6,9.9-6.4,1.5-4.4,0-9.3-4.1-11.9-2.4-1.8-5.3-3.1-8.4-3.7-.3,0-.4-.3-.4-.5,0-.8,2.4-49.1,2.4-49.1.3-5.4-3.1-9.4-8.6-9.9-5.5,0-9.6,3.2-10.2,8.4l-2.3,22.6-7.7-28.4c-1.8-6.7-5.8-9.4-11.6-8-5.8,1.4-7.6,6.2-6.6,11.8l8.2,33.8-13.5-22c-3-5-7.7-6.7-12.6-4.8-4.6,1.8-6.8,6.2-5.3,10.2,1.7,4.6,14.3,29.2,14.3,29.2l-12.2-14.8c-3.2-4-8.1-4.5-12.5-1.7h0ZM107.8,98.1c0-.1,0-.4.3-.4h.5c1.4.6,2.8,1.4,4,2.3,1.7,1,2.4,3,1.8,4.9h0c-.5,1.3-1.8,2.1-3.3,2.1s0,0,0,0c-1.8,0-3-2.3-3.3-4.6h0v-4.1h.1ZM39,73.5c4.6,5.5,18.9,21.6,18.9,21.6.5.6,3,1.7,4.9.5s1.7-2.6,1-3.9c0,0-14.6-31.7-17.3-37.9-.6-1.5,0-3.1,1.5-3.7,2.4-1,4.1.4,5.1,2.1,4.8,8.1,20.6,32.5,20.7,32.8.9,1.3,2.7,1.8,4.2,1.3,1.5-.6,2.4-2.1,2.1-3.6-3-13.6-9.5-41.9-10.2-45.5-.4-2.6.3-4,1.9-4.6,2.4-.9,3.5.4,4.4,3.1l11,38.3c.5,1.4,2.1,2.3,3.6,2.3s3-1.3,3.1-2.8l3.9-32.4c0-1.7,1.4-3.3,3.6-3.2s2.8,2.4,2.7,3.7-2.6,46.3-2.6,48.6-.3.5-.5.5c-4.9.4-10.4,1.4-15,3.1-10.7,3.9-19,11.7-23.1,21.5-.4,1-.8,2.2-1.2,3.3,0,.3-.3.4-.5.4h0c-.3,0-.4,0-.5-.3-6.2-10.7-27.1-42.1-27.5-42.7-.6-.9-.6-2.6.8-3.5,2.6-1.5,4.1.5,4.9,1.3v-.3Z"/>
+    <g fill="currentColor">
+      <path d="M227,98.3c0,8.7,1.9,15.8,5.8,21.3,3.9,5.5,10,8.4,18.8,8.4s7.3-.5,11.2-1.4c3.9-.9,8.6-2.6,14.4-4.9l6.6,18.6c-6.4,2.8-12.3,4.9-17.7,6-5.4,1.2-10.7,1.8-15.7,1.8-10,0-18.4-2.2-25.1-6.4-6.7-4.2-11.8-10.2-15.2-17.7-3.3-7.5-5-16.1-5-25.7v-25.6c0-9.6,1.7-18.2,5-25.7,3.3-7.5,8.4-13.4,15.2-17.6,6.7-4.2,15.2-6.3,25.1-6.3s9.9.5,15.2,1.7,10.9,3.1,17.2,5.8l-6.6,18.9c-5.5-2.3-10-3.9-13.7-4.9-3.7-.9-7.3-1.4-10.7-1.4-8.7,0-14.9,2.7-18.8,8.2-3.9,5.5-5.8,12.6-5.8,21.3v25.6h-.1Z"/>
+      <path d="M296.4,120.8V14.1h20.6v106.6c0,1.8.4,3.5,1.3,5.1.9,1.7,2.7,2.4,5.3,2.4h2.8v18.9h-5c-6.8,0-11.9-1.3-15.5-4-3.6-2.6-6-5.9-7.5-10-1.4-4.1-2.1-8.2-2.1-12.5h.1Z"/>
+      <path d="M362.2,38.6h-21.6v-21.3h21.6v21.3ZM361.7,146.4h-20.6V55.8h20.6v90.6Z"/>
+      <path d="M451.5,141.1c-6.2,2.4-12.1,4.2-17.5,5.4-5.5,1-10.7,1.7-15.5,1.7-13.5,0-23.6-3.9-30.6-11.4-6.9-7.6-10.4-17.7-10.4-30.3v-10.7c0-8.5,1.5-15.8,4.6-22,3.1-6.2,7.5-11,13.2-14.5,5.8-3.5,12.5-5.1,20.2-5.1s12.2,1.3,17.7,3.9c5.5,2.6,10,6.6,13.6,11.9,3.5,5.4,5.3,12.3,5.3,20.8s-.1,5.1-.5,8c-.4,2.8-.9,5.8-1.8,8.9h-52.6c.3,7.5,2.1,13,5.5,16.6,3.5,3.7,9,5.5,16.6,5.5s8.2-.5,12.6-1.4,8.9-2.4,13.5-4.2l5.9,17.3v-.3ZM415.6,71.4c-5.5,0-9.8,1.8-12.7,5.3-3.1,3.5-4.8,8.6-5.3,15.2h34.3c0-.6.1-1.2.1-1.7v-1.5c0-5.8-1.7-10-4.9-12.8-3.2-2.8-7.1-4.2-11.6-4.2h0Z"/>
+      <path d="M512.2,73c-3,0-6.4.8-10.2,2.2-3.9,1.4-8.4,4.2-13.6,8.4v62.7h-20.6V55.8h19.5v12.2c5.7-4.9,10.9-8.5,15.9-10.7,5-2.2,10-3.3,15.2-3.3,8.7,0,15.3,2.8,19.8,8.4,4.5,5.5,6.8,13.4,6.8,23.4v60.8h-20.6v-58.2c0-10-4.1-15-12.3-15v-.3Z"/>
+      <path d="M637,155.5c0,9.6-3.7,17.2-11.3,22.6-7.6,5.4-18.1,8.1-31.6,8.1s-13-.8-20-2.2c-7.1-1.4-13.5-3.9-19.5-7.2l5.9-16.3c5.8,2.8,11.4,4.9,17,6.2,5.7,1.3,11.1,1.9,16.4,1.9s13.2-1,17.2-3.1c4-2.1,5.9-4.8,5.9-8.1,0-5.1-3.1-7.7-9.1-7.7h-21.5c-5.8,0-10.5-.9-14.1-2.8s-6.2-4.4-7.8-7.5c-1.7-3.1-2.4-6.2-2.4-9.5s.8-6.7,2.2-9.8c1.5-3.1,3.6-5.9,6.2-8.5-4.2-2.6-7.7-6.2-10.3-10.5-2.6-4.4-3.9-9.8-3.9-15.9s1.5-12.8,4.5-17.5c3-4.6,7.1-8.1,12.2-10.4,5.1-2.3,10.9-3.5,17.2-3.5h3.1c2.4,0,4.8.1,6.9.4,2.3.3,4.4.8,6.4,1.3h32.4v17.5l-17.9-2.8c1.8,1.9,3.2,4.2,4.2,7.1,1,2.8,1.5,6.2,1.5,10.3,0,6-1.5,11.3-4.5,15.7-3.1,4.4-7.1,7.7-12.2,10-5,2.3-10.7,3.5-16.8,3.5h-3.1c-2.4,0-4.6-.1-6.8-.5-1.3,1.4-2.3,2.8-2.8,4.4-.6,1.5-.9,2.8-.9,4.2,0,4.1,2.7,6.3,8.1,6.3h21.8c8.2,0,14.9,2.1,19.9,6.3s7.6,10.3,7.6,18h-.1ZM593.2,100.1c3.7,0,6.9-1.3,9.8-3.7,2.8-2.4,4.2-6.2,4.2-10.9s-1.4-8.4-4.2-10.9c-2.8-2.4-6-3.7-9.8-3.7h-3.1c-3.9,0-7.1,1.3-9.9,3.7-2.8,2.4-4.2,6.2-4.2,10.9s1.4,8.4,4.2,10.9c2.8,2.4,6.2,3.7,9.9,3.7h3.1Z"/>
+      <path d="M725.2,95.6v10.7c0,12.6-3.5,22.7-10.4,30.3-6.9,7.6-16.7,11.4-29.3,11.4s-22.4-3.9-29.3-11.4c-6.9-7.6-10.4-17.7-10.4-30.3v-10.7c0-12.6,3.5-22.7,10.3-30.3,6.8-7.6,16.7-11.3,29.4-11.3s22.5,3.7,29.4,11.3c6.8,7.6,10.3,17.7,10.3,30.3h0ZM704.1,95.6c0-7.3-1.7-13-4.9-17.1-3.2-4.1-7.8-6.2-13.7-6.2s-10.5,2.1-13.7,6.2c-3.2,4.1-4.9,9.8-4.9,17.1v10.7c0,7.3,1.7,13,4.9,17.2,3.2,4.1,7.8,6.3,13.7,6.3s10.5-2.1,13.7-6.3c3.2-4.1,4.9-9.9,4.9-17.2v-10.7Z"/>
+    </g>
+  </symbol>
+</svg>
+
+<!-- ========== NAV ========== -->
+<nav class="nav">
+  <div class="nav__in">
+    <a class="logo" href="#top" aria-label="Cliengo — inicio"><svg class="logo__svg" viewBox="0 0 730 190" role="img" aria-hidden="true"><use href="#cliengo-logo"/></svg></a>
+    <span class="nav__tag">Vertical inmobiliario</span>
+    <div class="nav__cta"><a class="btn btn--primary" href="https://wa.me/5491159251652?text=Hola%2C%20vengo%20de%20la%20web%20de%20Cliengo%20para%20inmobiliarias%20y%20quiero%20saber%20m%C3%A1s%20%F0%9F%8F%A0" target="_blank" rel="noopener noreferrer">Agendar demo</a></div>
+  </div>
+</nav>
+
+<!-- ========== HERO ========== -->
+<header class="hero" id="top">
+  <div class="wrap hero__grid">
+    <div>
+      <p class="eyebrow">Agente IA para inmobiliarias</p>
+      <h1>El asesor que atiende <em>24/7</em>, mientras tu equipo muestra propiedades y cierra tratos.</h1>
+      <p class="lede hero__lede">Un agente conversacional conectado a tu cartera. Responde al instante en WhatsApp, Web, Instagram y Facebook. Recomienda propiedades reales, califica al interesado y agenda la visita.</p>
+      <div class="hero__cta">
+        <a class="btn btn--primary" href="https://wa.me/5491159251652?text=Hola%2C%20vengo%20de%20la%20web%20de%20Cliengo%20para%20inmobiliarias%20y%20quiero%20saber%20m%C3%A1s%20%F0%9F%8F%A0" target="_blank" rel="noopener noreferrer">Agendar demo<span class="msym">arrow_forward</span></a>
+      </div>
+      <p class="hero__note"><span class="msym">bolt</span>Conecta tu cartera y en minutos está atendiendo.</p>
+
+      <div class="hero__facts">
+        <div class="fact"><span class="msym">schedule</span><div><b>24/7, sin excepciones</b><span>Domingos, feriados y 3 de la mañana incluidos.</span></div></div>
+        <div class="fact"><span class="msym">home_work</span><div><b>Conoce tu cartera</b><span>Responde con tus propiedades, no con generalidades.</span></div></div>
+        <div class="fact"><span class="msym">person_check</span><div><b>Califica antes del handoff</b><span>Tu asesor entra cuando el interesado ya sabe qué quiere.</span></div></div>
+        <div class="fact"><span class="msym">sell</span><div><b>También capta propietarios</b><span>Toma los datos de quien quiere vender o tasar.</span></div></div>
+      </div>
+    </div>
+
+    <!-- ===== signature: chat player ===== -->
+    <div class="player">
+      <div class="player__tabs" role="tablist" aria-label="Tipos de consulta">
+        <button class="tab" role="tab" aria-selected="true" data-i="0">Viene de un anuncio</button>
+        <button class="tab" role="tab" aria-selected="false" data-i="1">Sabe la dirección</button>
+        <button class="tab" role="tab" aria-selected="false" data-i="2">Busca en una zona</button>
+        <button class="tab" role="tab" aria-selected="false" data-i="3">No sabe qué busca</button>
+        <button class="tab" role="tab" aria-selected="false" data-i="4">Quiere vender</button>
+        <button class="tab" role="tab" aria-selected="false" data-i="5">Pregunta por la oficina</button>
+      </div>
+
+      <div class="phone">
+        <div class="phone__bar">
+          <span class="phone__av"><span class="msym">apartment</span></span>
+          <div>
+            <div class="phone__who">Delta Propiedades</div>
+            <div class="phone__st"><i></i>en línea</div>
+          </div>
+          <span class="phone__ch" id="chanLabel">WhatsApp</span>
+        </div>
+        <div class="thread" id="thread" aria-live="polite"></div>
+      </div>
+      <p class="player__cap"><span class="msym">play_circle</span>Conversaciones reales del agente. Elige un caso o déjalas correr.</p>
+    </div>
+  </div>
+</header>
+
+<!-- ========== PROBLEMA ========== 
+<section class="sec" id="problema">
+  <div class="wrap">
+    <div class="sec__head">
+      <p class="eyebrow">El problema</p>
+      <h2>Las consultas no llegan en horario de oficina.</h2>
+      <p class="lede">Llegan a las 22:40, un domingo, mientras el asesor está mostrando un departamento. Y el interesado no espera: pregunta en la inmobiliaria de al lado.</p>
+    </div>
+    <div class="prob">
+      <div class="pcell">
+        <span class="msym">notifications_off</span>
+        <h3>Nadie contesta después de las 18</h3>
+        <p>Las consultas siguen entrando cuando la oficina ya cerró. Para el lunes están frías o atendidas por otro.</p>
+      </div>
+      <div class="pcell">
+        <span class="msym">directions_car</span>
+        <h3>El asesor está en la calle</h3>
+        <p>Mostrando, midiendo, cerrando. El WhatsApp se acumula y responde cuando puede, no cuando conviene.</p>
+      </div>
+      <div class="pcell">
+        <span class="msym">filter_alt_off</span>
+        <h3>El tiempo se va en curiosos</h3>
+        <p>Media hora de ida y vuelta para descubrir que buscaba alquiler y el presupuesto no alcanza.</p>
+      </div>
+    </div>
+    <div class="stat">
+      <div class="stat__n">78%</div>
+      <div>
+        <div class="stat__x">de los clientes cierran con el primer asesor que responde. La velocidad de respuesta no es un detalle de servicio: define quién se queda con la operación.</div>
+        <div class="stat__src">Dato publicado en la guía de WhatsApp para inmobiliarias de Cliengo — validar fuente antes de publicar.</div>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+<!-- ========== LOS 5 CAMINOS ==========
+<section class="sec sec--alt" id="casos">
+  <div class="wrap">
+    <div class="sec__head">
+      <p class="eyebrow">Qué resuelve</p>
+      <h2>Seis formas de empezar una consulta. Las seis terminan igual.</h2>
+      <p class="lede">Con el interesado calificado y un asesor que recibe el contexto completo.</p>
+    </div>
+    <div class="paths">
+      <div class="path">
+        <div class="path__h"><span class="msym">ads_click</span><h3>Llega desde una campaña</h3></div>
+        <p>El link trae la propiedad del anuncio. El agente ya sabe de cuál se está hablando y arranca por el precio, el mantenimiento o la visita.</p>
+        <q>Hola, vi este departamento</q>
+      </div>
+      <div class="path">
+        <div class="path__h"><span class="msym">location_on</span><h3>Pregunta por una dirección</h3></div>
+        <p>Por esquina, por altura o por el edificio. El agente cruza la referencia con tu cartera y muestra lo que hay cerca.</p>
+        <q>¿Tienen algo en San Martín y Belgrano?</q>
+      </div>
+      <div class="path">
+        <div class="path__h"><span class="msym">manage_search</span><h3>No sabe qué propiedad quiere</h3></div>
+        <p>Sabe la zona y la operación, nada más. El agente pregunta lo que falta —ambientes, presupuesto— y recomienda de tu cartera.</p>
+        <q>Busco departamento para alquilar por Villa Urquiza</q>
+      </div>
+      <div class="path">
+        <div class="path__h"><span class="msym">sell</span><h3>Quiere vender o tasar</h3></div>
+        <p>El camino de captación: confirma que se hacen tasaciones y toma nombre completo y contacto para que el equipo llame. Inventario nuevo, sin que nadie mueva un dedo.</p>
+        <q>Quiero vender mi casa, ¿hacen tasaciones?</q>
+      </div>
+      <div class="path">
+        <div class="path__h"><span class="msym">help</span><h3>Tiene una duda operativa</h3></div>
+        <p>Horarios, dirección de la oficina, requisitos para alquilar, formas de pago. Se responde solo y libera al equipo.</p>
+        <q>¿Hasta qué hora atienden?</q>
+      </div>
+      <div class="path">
+        <div class="path__h"><span class="msym">event_available</span><h3>Quiere ver la propiedad</h3></div>
+        <p>Con Google Calendar conectado, ofrece los horarios libres reales y confirma la visita. Ideal para desarrollos con oficina en obra.</p>
+        <q>¿Puedo verla el sábado?</q>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+<!-- ========== CARTERA / CRM ========== -->
+<section class="sec" id="cartera">
+  <div class="wrap duo">
+    <div>
+      <p class="eyebrow">Conectado a tu cartera</p>
+      <h2>No es un chatbot con respuestas armadas. Conoce tus propiedades.</h2>
+      <p>El agente consulta tu CRM: precio actualizado, superficie, dormitorios, fotos y estado de la publicación. Si una propiedad se reservó, deja de ofrecerla.</p>
+      <div class="crm" style="margin-top:22px">
+        <span class="chip"><span class="msym">check_circle</span>Tokko Broker</span>
+        <span class="chip"><span class="msym">check_circle</span>EasyBroker</span>
+        <span class="chip"><span class="msym">check_circle</span>Xintel</span>
+        <span class="chip"><span class="msym">check_circle</span>Kiteprop</span>
+        <span class="chip chip--open"><span class="msym">api</span>¿Otro CRM? Si tiene API, se conecta</span>
+      </div>
+      <ul class="checks">
+        <li><span class="msym">done</span>Sincronización de la cartera, sin cargar nada a mano</li>
+        <li><span class="msym">done</span>Responde solo con datos de tu inventario: no improvisa precios</li>
+      </ul>
+    </div>
+    <div class="duo__fig">
+      <div class="mock">
+        <div class="mock__bar"><span class="mock__dot"></span><span class="mock__dot"></span><span class="mock__dot"></span><span class="mock__url">deltapropiedades.com/ficha/1240</span></div>
+        <div class="mock__body">
+          <div class="mock__hero"><span class="msym">apartment</span></div>
+          <div class="mock__t">2 dormitorios · Av. San Martín 1240</div>
+          <div class="mock__p">USD 148.000</div>
+          <div class="mock__meta">
+            <span><span class="msym">straighten</span>78 m²</span>
+            <span><span class="msym">bed</span>2 dorm.</span>
+            <span><span class="msym">directions_car</span>Estacionamiento</span>
+          </div>
+          <div class="bubble bubble--u">precio?</div>
+          <div class="bubble">Es el <b>departamento de Av. San Martín 1240</b>: USD 148.000, mantenimiento USD 90. ¿Quieres coordinar una visita?</div>
+        </div>
+      </div>
+      <p class="player__cap"><span class="msym">visibility</span>En tu sitio, el agente sabe qué ficha está mirando la persona.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== EQUIPO / HANDOFF ========== -->
+<section class="sec sec--alt" id="equipo">
+  <div class="wrap duo duo--flip">
+    <div>
+      <p class="eyebrow">Tu equipo sigue al mando</p>
+      <h2>El agente no reemplaza al asesor. Le entrega el lead tibio.</h2>
+      <p>Todas las conversaciones llegan a un inbox único. El asesor las lee en vivo y entra cuando quiere: apenas el interesado definió zona, presupuesto y tipo de operación, o antes si lo prefiere.</p>
+      <ul class="checks">
+        <li><span class="msym">done</span>Inbox multicanal con las conversaciones de todos los canales</li>
+        <li><span class="msym">done</span>Intervención humana en cualquier momento, sin cortar el hilo</li>
+        <li><span class="msym">done</span>Los datos del interesado quedan registrados y etiquetados</li>
+      </ul>
+    </div>
+    <div class="duo__fig">
+      <div class="mock">
+        <div class="mock__bar"><span class="mock__dot"></span><span class="mock__dot"></span><span class="mock__dot"></span><span class="mock__url">app.cliengo.com/inbox</span></div>
+        <div class="ibx">
+          <div class="ibx__row ibx__row--sel">
+            <span class="ibx__av"><span class="msym">person</span></span>
+            <div>
+              <div class="ibx__n">Carla M. <span class="ibx__ch">WhatsApp</span></div>
+              <div class="ibx__s">Zona norte · 2 dorm. · hasta USD 130.000</div>
+            </div>
+            <span class="ibx__tag ibx__tag--ok">Compra</span>
+          </div>
+          <div class="ibx__row">
+            <span class="ibx__av"><span class="msym">person</span></span>
+            <div>
+              <div class="ibx__n">Diego R. <span class="ibx__ch">Web</span></div>
+              <div class="ibx__s">Pregunta por Av. San Martín 1240</div>
+            </div>
+            <span class="ibx__tag ibx__tag--new">Alquiler</span>
+          </div>
+          <div class="ibx__row">
+            <span class="ibx__av"><span class="msym">person</span></span>
+            <div>
+              <div class="ibx__n">Familia Suárez <span class="ibx__ch">Instagram</span></div>
+              <div class="ibx__s">Quiere tasar una casa en Villa Alegre</div>
+            </div>
+            <span class="ibx__tag ibx__tag--cap">Captación</span>
+          </div>
+        </div>
+        <div class="ibx__foot">
+          <button class="ibx__btn" type="button" tabindex="-1"><span class="msym">reply</span>Tomar la conversación</button>
+          <span class="ibx__hint">El agente sigue atendiendo el resto.</span>
+        </div>
+      </div>
+      <p class="player__cap"><span class="msym">inbox</span>Un inbox para los cuatro canales. Etiquetas y Reglas de Asignación de acuerdo a tu negocio</p>
+    </div>
+  </div>
+
+  <div class="wrap arranca">
+    <p class="eyebrow">Cómo arranca</p>
+    <h3 class="arranca__h">Conectas la cartera y el mismo día está atendiendo.</h3>
+    <div class="steps">
+      <div class="step">
+        <div class="step__n">PASO 1</div>
+        <h3>Conecta tu cartera</h3>
+        <p>API de tu CRM, planilla o tu propio sitio web. Las propiedades quedan disponibles para el agente.</p>
+      </div>
+      <div class="step">
+        <div class="step__n">PASO 2</div>
+        <h3>Revisa la configuración</h3>
+        <p>Viene preconfigurado para inmobiliarias. Ajustas nombre, tono y qué datos pedir si quieres.</p>
+      </div>
+      <div class="step">
+        <div class="step__n">PASO 3</div>
+        <h3>Pruébalo en minutos</h3>
+        <p>Empieza a atender enseguida. Después sigues afinando reglas y respuestas con la operación andando.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CONFIGURACIÓN ========== -->
+<section class="sec" id="config">
+  <div class="wrap">
+    <div class="sec__head">
+      <p class="eyebrow">Habla como tu inmobiliaria</p>
+      <h2>Decides cómo suena y qué pregunta.</h2>
+    </div>
+    <div class="cfg">
+      <div class="cfg__c">
+        <span class="msym">record_voice_over</span>
+        <h3>Tono</h3>
+        <p>Formal, profesional o cercano. El nombre del agente también lo eliges tú.</p>
+      </div>
+      <div class="cfg__c">
+        <span class="msym">translate</span>
+        <h3>Variante del español</h3>
+        <p>Tuteo argentino o español neutro para el resto de LATAM.</p>
+      </div>
+      <div class="cfg__c">
+        <span class="msym">list_alt</span>
+        <h3>Datos que pide</h3>
+        <p>Qué campos capturar y en qué momento: al inicio, después de calificar o al cierre.</p>
+      </div>
+      <div class="cfg__c">
+        <span class="msym">rule</span>
+        <h3>Reglas de negocio</h3>
+        <p>Instrucciones propias que el agente respeta siempre en cada conversación.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:56px">
+      <p class="eyebrow" style="margin-bottom:14px">Donde te escriben</p>
+      <div class="chan">
+        <div class="chan__i chan__i--hi"><span class="msym">chat</span><div><b>WhatsApp</b><small>El canal principal</small></div></div>
+        <div class="chan__i chan__i--hi"><span class="msym">language</span><div><b>Tu sitio web</b><small>Widget con contexto de ficha</small></div></div>
+        <div class="chan__i"><span class="msym">photo_camera</span><div><b>Instagram Direct</b><small>Consultas de posts y stories</small></div></div>
+        <div class="chan__i"><span class="msym">forum</span><div><b>Facebook Messenger</b><small>Incluido</small></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PRECIO ========== -->
+<section class="sec sec--alt" id="precio">
+  <div class="wrap">
+    <div class="sec__head sec__head--center">
+      <p class="eyebrow">Precio</p>
+      <h2>Plataforma Cliengo + módulo inmobiliario.</h2>
+      <p class="lede">Un precio, dos partes: el plan de Cliengo que ya conoces y el módulo que le da la cartera de propiedades.</p>
+    </div>
+    <div class="price">
+      <div class="plan">
+        <div class="plan__n">Starter</div>
+        <div class="plan__tot">$65<small>/mes</small></div>
+        <ul>
+          <li><span class="msym">done</span>2 operadores</li>
+          <li><span class="msym">done</span>500 conversaciones</li>
+          <li><span class="msym">done</span>Inbox multicanal</li>
+        </ul>
+      </div>
+      <div class="plan plan--hi">
+        <div class="plan__flag">Más elegido</div>
+        <div class="plan__n">Premium</div>
+        <div class="plan__tot">$169<small>/mes</small></div>
+
+        <ul>
+          <li><span class="msym">done</span>3 operadores</li>
+          <li><span class="msym">done</span>2.000 conversaciones IA</li>
+          <li><span class="msym">done</span>Automatizaciones incluidas</li>
+          <li><span class="msym">done</span>Copilot en todas las conversaciones</li>
+        </ul>
+      </div>
+      <div class="plan">
+        <div class="plan__n">Business</div>
+        <div class="plan__tot">$334<small>/mes</small></div>
+        <ul>
+          <li><span class="msym">done</span>5 operadores</li>
+          <li><span class="msym">done</span>4.000 conversaciones IA</li>
+          <li><span class="msym">done</span>WhatsApp API</li>
+          <li><span class="msym">done</span>Mensajes salientes (HSM)</li>
+        </ul>
+      </div>
+      <div class="plan">
+        <div class="plan__n">Corporate</div>
+        <div class="plan__tot">A medida</div>
+        <ul>
+          <li><span class="msym">done</span>+5 operadores</li>
+          <li><span class="msym">done</span>Integraciones a medida</li>
+          <li><span class="msym">done</span>Acompañamiento dedicado</li>
+        </ul>
+      </div>
+    </div>
+    <div class="price__fine">
+      <div><span class="msym">info</span>Una conversación es una sesión de 24 horas con la misma persona, sin importar cuántos mensajes intercambie.</div>
+      <div><span class="msym">info</span>Los costos de Meta por mensajes de WhatsApp se facturan aparte, directo con Meta.</div>
+      <div><span class="msym">info</span>Precios en dólares. El módulo inmobiliario se suma al plan de Cliengo que elijas.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FAQ ========== -->
+<section class="sec" id="faq">
+  <div class="wrap">
+    <div class="sec__head sec__head--center">
+      <p class="eyebrow">Preguntas</p>
+      <h2>Lo que suelen preguntar antes de arrancar.</h2>
+    </div>
+    <div class="faq">
+      <details open>
+        <summary>¿Cuánto tarda en estar funcionando?<span class="msym">add</span></summary>
+        <p>Viene preconfigurado para inmobiliarias. Una vez que conectas tu cartera, en minutos puedes estar probándolo. Después sigues ajustando tono, reglas y datos a capturar con el agente ya atendiendo.</p>
+      </details>
+      <details>
+        <summary>¿Se nota que no es una persona?<span class="msym">add</span></summary>
+        <p>El agente se presenta como asistente y responde con el tono que le configures. En la práctica, quien consulta valora más que le respondan al instante con la información correcta. Y cuando la conversación amerita un humano, tu asesor entra en el mismo hilo.</p>
+      </details>
+      <details>
+        <summary>Mi sistema de propiedades no está en la lista, ¿sirve igual?<span class="msym">add</span></summary>
+        <p>Si tu sistema expone una API, te lo conectamos en el día. Ya trabajamos con Tokko Broker, EasyBroker, Xintel y Kiteprop.</p>
+      </details>
+      <details>
+        <summary>¿Puede inventar un precio o una propiedad?<span class="msym">add</span></summary>
+        <p>Responde con los datos de tu cartera sincronizada. Si una propiedad no está o no coincide con lo que busca, ofrece alternativas reales del inventario en lugar de completar el dato por su cuenta.</p>
+      </details>
+      <details>
+        <summary>¿Reemplaza a mi equipo de ventas?<span class="msym">add</span></summary>
+        <p>No. Cubre el turno que nadie cubre y hace el trabajo repetitivo: responder, entender qué busca la persona y ordenar el pedido. El asesor recibe la conversación con el contexto listo y se dedica a lo que cierra operaciones.</p>
+      </details>
+      <details>
+        <summary>¿Sirve para captar propiedades, no solo para vender?<span class="msym">add</span></summary>
+        <p>Sí, y es uno de los usos más rentables. Cuando alguien escribe porque quiere vender o tasar, el agente toma los datos de contacto, y le pasa la captación a tu equipo.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CTA FINAL ========== -->
+<section class="final" id="demo">
+  <div class="wrap">
+    <svg class="final__logo" viewBox="0 0 730 190" role="img" aria-label="Cliengo"><use href="#cliengo-logo"/></svg>
+    <h2>Veamos cómo atendería tu cartera.</h2>
+    <p>Agenda 20 minutos con un especialista. Te mostramos el agente funcionando con propiedades como las tuyas y qué haría falta para conectarlo.</p>
+    <a class="btn btn--primary" href="https://wa.me/5491159251652?text=Hola%2C%20vengo%20de%20la%20web%20de%20Cliengo%20para%20inmobiliarias%20y%20quiero%20saber%20m%C3%A1s%20%F0%9F%8F%A0" target="_blank" rel="noopener noreferrer">Agendar demo<span class="msym">arrow_forward</span></a>
+    <div class="trust">
+      <span><span class="msym">verified</span>Meta Business Partner</span>
+      <span><span class="msym">workspace_premium</span>+9 años en IA conversacional</span>
+      <span><span class="msym">groups</span>Equipo LATAM en español</span>
+      <span><span class="msym">credit_card_off</span>Sin tarjeta para la demo</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Cliengo · Agente IA para inmobiliarias</span>
+    <span>Precios en USD, sin impuestos.</span>
+  </div>
+</footer>
+
+<script>
+/* ============ chat player ============ */
+const SCENES = [
+  { channel:"WhatsApp · desde un anuncio", msgs:[
+    {who:"user", card:{t:"Av. San Martín 1240", p:"USD 148.000", m:"78 m² · 2 dorm."}, url:"deltapropiedades.com/venta/depto-av-san-martin-1240", text:"Hola, vi este departamento"},
+    {who:"bot", text:"Hola, soy Delia, la asistente de Delta Propiedades. Es el departamento de Av. San Martín 1240: USD 148.000, 78 m², con balcón y estacionamiento."},
+    {who:"user", text:"cuánto es el mantenimiento?"},
+    {who:"bot", text:"USD 90 por mes, incluye portería. ¿Quieres que coordinemos una visita o prefieres ver otras opciones en la zona?"}
+  ]},
+  { channel:"WhatsApp · por dirección", msgs:[
+    {who:"user", text:"Hola, me interesa la propiedad de San Martín y Belgrano"},
+    {who:"bot", text:"Sí, es el departamento de Av. San Martín 1240, justo en la esquina de Belgrano:"},
+    {who:"bot", cards:[
+      {t:"Av. San Martín 1240 (esq. Belgrano)", p:"USD 148.000", m:"78 m² · 2 dorm. · Estacionamiento"}
+    ]},
+    {who:"user", text:"sigue disponible?"},
+    {who:"bot", text:"Sí, está disponible. ¿Quieres coordinar una visita para conocerla?"}
+  ]},
+  { channel:"WhatsApp · alquiler", msgs:[
+    {who:"user", text:"Hola, estoy buscando departamento para alquilar por Villa Urquiza"},
+    {who:"bot", text:"Te ayudo con eso. ¿Cuántos ambientes necesitas?"},
+    {who:"user", text:"2 o 3 ambientes"},
+    {who:"bot", text:"Perfecto. ¿Con qué presupuesto mensual estás buscando?"},
+    {who:"user", text:"hasta 600 mil"},
+    {who:"bot", text:"Tengo estas dos en Villa Urquiza dentro de ese presupuesto:"},
+    {who:"bot", cards:[
+      {t:"Triunvirato 4200", p:"$ 520.000/mes", m:"2 amb. · 45 m²"},
+      {t:"Bauness 1180", p:"$ 585.000/mes", m:"3 amb. · 62 m²"}
+    ]},
+    {who:"bot", text:"¿Quieres que coordinemos una visita a alguna de las dos?"}
+  ]},
+  { channel:"WhatsApp · sin propiedad definida", msgs:[
+    {who:"user", text:"Hola, busco departamento para comprar en zona norte, 2 dormitorios, hasta 130 mil"},
+    {who:"bot", text:"Encontré dos que entran en ese presupuesto:"},
+    {who:"bot", cards:[
+      {t:"Los Robles 240", p:"USD 119.000", m:"62 m² · 2 dorm."},
+      {t:"Av. del Parque 1180", p:"USD 128.500", m:"70 m² · 2 dorm. · Balcón"}
+    ]},
+    {who:"user", text:"me interesa el segundo, puedo verlo el sábado?"},
+    {who:"bot", text:"El sábado tengo estos horarios libres:", slots:["10:00","11:30","12:15"]},
+    {who:"user", text:"11:30"},
+    {who:"bot", text:"Listo, visita agendada para el sábado a las 11:30 con Martín. ¿Me dejas tu nombre y teléfono para la confirmación?"}
+  ]},
+  { channel:"WhatsApp · captación", msgs:[
+    {who:"user", text:"Hola, quiero vender mi casa. Hacen tasaciones?"},
+    {who:"bot", text:"Sí, hacemos tasación sin cargo y sin compromiso."},
+    {who:"bot", text:"Para que un tasador te contacte, ¿me dejas tu nombre completo y un teléfono o correo?"},
+    {who:"user", text:"Marina Suárez, 11 5555 1234"},
+    {who:"bot", text:"Gracias, Marina. Le paso tus datos al equipo de captaciones y te contactan para coordinar la visita a la propiedad."}
+  ]},
+  { channel:"Instagram Direct · consulta general", msgs:[
+    {who:"user", text:"hasta qué hora atienden?"},
+    {who:"bot", text:"La oficina abre de lunes a viernes de 9 a 18 y sábados de 9 a 13, en Av. Central 1180. Por aquí te respondo a cualquier hora."},
+    {who:"user", text:"y para alquilar qué piden?"},
+    {who:"bot", text:"Comprobante de ingresos de los últimos tres meses, un aval o póliza de arrendamiento, y un mes de depósito. ¿Estás buscando algo para alquilar?"}
+  ]}
+];
+
+const thread = document.getElementById('thread');
+const chanLabel = document.getElementById('chanLabel');
+const tabs = Array.from(document.querySelectorAll('.tab'));
+const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+let scene = 0, timers = [], autoplay = true;
+
+function clearTimers(){ timers.forEach(clearTimeout); timers = []; }
+function wait(ms){ return new Promise(r => timers.push(setTimeout(r, ms))); }
+
+function cardEl(c){
+  const d = document.createElement('div');
+  d.className = 'pcard';
+  d.innerHTML = '<div class="pcard__im"><span class="msym">apartment</span></div>' +
+    '<div><div class="pcard__t">'+c.t+'</div><div class="pcard__p">'+c.p+'</div><div class="pcard__m">'+c.m+'</div></div>';
+  return d;
+}
+
+function render(m){
+  const frag = document.createDocumentFragment();
+  if (m.cards){
+    const box = document.createElement('div');
+    box.className = 'pcards';
+    m.cards.forEach(c => box.appendChild(cardEl(c)));
+    frag.appendChild(box);
+  } else {
+    const b = document.createElement('div');
+    b.className = 'msg msg--' + m.who;
+    if (m.card){
+      const box = document.createElement('div');
+      box.style.marginBottom = '7px';
+      box.appendChild(cardEl(m.card));
+      b.appendChild(box);
+    }
+    if (m.url){
+      const u = document.createElement('span');
+      u.className = 'msg__url';
+      u.textContent = m.url;
+      b.appendChild(u);
+    }
+    if (m.text) b.appendChild(document.createTextNode(m.text));
+    if (m.slots){
+      const s = document.createElement('div');
+      s.className = 'slots';
+      m.slots.forEach((t,i) => {
+        const x = document.createElement('span');
+        x.className = 'slot' + (i === 1 ? ' slot--on' : '');
+        x.textContent = t;
+        s.appendChild(x);
+      });
+      b.appendChild(s);
+    }
+    frag.appendChild(b);
+  }
+  thread.appendChild(frag);
+  thread.scrollTop = thread.scrollHeight;
+}
+
+function typing(){
+  const t = document.createElement('div');
+  t.className = 'typing';
+  t.innerHTML = '<i></i><i></i><i></i>';
+  thread.appendChild(t);
+  thread.scrollTop = thread.scrollHeight;
+  return t;
+}
+
+async function play(i){
+  clearTimers();
+  scene = i;
+  thread.innerHTML = '';
+  chanLabel.textContent = SCENES[i].channel.split(' · ')[0];
+  tabs.forEach((t,k) => t.setAttribute('aria-selected', k === i ? 'true' : 'false'));
+
+  if (reduce){
+    SCENES[i].msgs.forEach(render);
+    return;
+  }
+  await wait(420);
+  for (const m of SCENES[i].msgs){
+    if (m.who === 'bot'){
+      const t = typing();
+      await wait(Math.min(1500, 520 + (m.text ? m.text.length * 11 : 400)));
+      t.remove();
+    } else {
+      await wait(700);
+    }
+    render(m);
+    await wait(560);
+  }
+  if (autoplay){
+    await wait(3400);
+    play((i + 1) % SCENES.length);
+  }
+}
+
+tabs.forEach(t => t.addEventListener('click', () => {
+  autoplay = false;
+  play(parseInt(t.dataset.i, 10));
+}));
+
+/* arranca cuando el player entra en pantalla */
+const io = new IntersectionObserver((ents) => {
+  ents.forEach(e => {
+    if (e.isIntersecting){ play(0); io.disconnect(); }
+  });
+}, {threshold:.25});
+io.observe(document.querySelector('.player'));
+</script>
+</body>
+</html>
