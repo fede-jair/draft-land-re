@@ -368,7 +368,7 @@ details p{font-size:16px;color:var(--ink-2);margin-top:12px;padding-right:32px;l
 
 /* final cta + formulario */
 .final{background:var(--ink);color:#fff;padding:88px 0}
-.final__grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+.final__grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
 .final h2{font-size:clamp(28px,3.4vw,40px);max-width:20ch;margin:0 0 18px}
 .final p{font-size:18px;color:rgba(255,255,255,.72);max-width:46ch;margin:0}
 .trust{
@@ -379,11 +379,13 @@ details p{font-size:16px;color:var(--ink-2);margin-top:12px;padding-right:32px;l
 .trust span{display:flex;align-items:center;gap:8px}
 .trust .msym{font-size:17px;color:var(--wa)}
 .formcard{background:#fff;color:var(--ink);border-radius:var(--r);padding:28px;box-shadow:var(--shadow-lg)}
-.formcard h3{font-size:21px;margin-bottom:8px}
-.formcard__sub{font-family:var(--font-ui);font-size:14px;color:var(--ink-2);margin-bottom:20px}
-/* HubSpot renderiza el form dentro de un iframe: su tipografía, colores y el texto
-   del botón se configuran desde HubSpot, no desde acá. La tarjeta blanca existe
-   para que el form quede legible sobre el fondo oscuro de esta sección. */
+/* HubSpot renderiza el form en un iframe y escribe la altura final inline en este
+   contenedor (height:NNNpx, 864px con este form). Arranca en height:0px y recién
+   lo corrige cuando el form está dibujado y visible, así que el min-height es la
+   red de seguridad: sin él la tarjeta se ve vacía hasta ese momento, y queda vacía
+   para siempre si el ajuste no llega. No lo bajes a 0.
+   Tipografía, colores y el texto del botón se configuran desde HubSpot, no acá.
+   La tarjeta blanca existe para que el form quede legible sobre el fondo oscuro. */
 .hs-form-frame{min-height:520px}
 footer{padding:30px 0;font-family:var(--font-ui);font-size:13px;color:var(--ink-3)}
 footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
@@ -832,9 +834,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       </div>
     </div>
     <div class="formcard">
-      <h3>Agenda tu demo</h3>
-      <p class="formcard__sub">Completa el formulario y un especialista te contacta.</p>
-      <div class="hs-form-frame" data-region="na1" data-form-id="d3f13e52-9558-4641-99d2-eb6f126fb600" data-portal-id="44736092"></div>
+      <div class="hs-form-frame" data-region="na1" data-form-id="871922d4-b06b-4490-8f8c-335d11c68c3a" data-portal-id="44736092"></div>
     </div>
   </div>
 </section>
