@@ -86,7 +86,7 @@ img{max-width:100%}
 .logo{display:flex;align-items:center;text-decoration:none;color:var(--ink)}
 .logo__svg{height:32px;width:auto;display:block}
 .logo-sprite{position:absolute;width:0;height:0;overflow:hidden}
-.final__logo{height:30px;width:auto;display:block;margin:0 auto 26px}
+.final__logo{height:30px;width:auto;display:block;margin:0 0 26px}
 .nav__tag{
   font-family:var(--font-ui);font-size:12px;font-weight:500;color:var(--ink-2);
   padding:4px 9px;border:1px solid var(--line);border-radius:999px;background:var(--surface);
@@ -366,25 +366,31 @@ summary .msym{font-size:20px;color:var(--purple);transition:transform .2s ease;m
 details[open] summary .msym{transform:rotate(45deg)}
 details p{font-size:16px;color:var(--ink-2);margin-top:12px;padding-right:32px;line-height:1.55}
 
-/* final cta */
-.final{background:var(--ink);color:#fff;padding:88px 0;text-align:center}
-.final h2{font-size:clamp(28px,3.4vw,42px);max-width:22ch;margin:0 auto 18px}
-.final p{font-size:18px;color:rgba(255,255,255,.72);max-width:52ch;margin:0 auto 30px}
-.final .btn--primary{background:#fff;color:var(--ink);box-shadow:none}
-.final .btn--primary:hover{background:#EDEAFF}
+/* final cta + formulario */
+.final{background:var(--ink);color:#fff;padding:88px 0}
+.final__grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+.final h2{font-size:clamp(28px,3.4vw,40px);max-width:20ch;margin:0 0 18px}
+.final p{font-size:18px;color:rgba(255,255,255,.72);max-width:46ch;margin:0}
 .trust{
-  margin-top:36px;padding-top:26px;border-top:1px solid rgba(255,255,255,.14);
-  display:flex;flex-wrap:wrap;gap:26px;justify-content:center;
+  margin-top:32px;padding-top:24px;border-top:1px solid rgba(255,255,255,.14);
+  display:grid;gap:12px;
   font-family:var(--font-ui);font-size:13px;color:rgba(255,255,255,.6);
 }
-.trust span{display:flex;align-items:center;gap:7px}
+.trust span{display:flex;align-items:center;gap:8px}
 .trust .msym{font-size:17px;color:var(--wa)}
+.formcard{background:#fff;color:var(--ink);border-radius:var(--r);padding:28px;box-shadow:var(--shadow-lg)}
+.formcard h3{font-size:21px;margin-bottom:8px}
+.formcard__sub{font-family:var(--font-ui);font-size:14px;color:var(--ink-2);margin-bottom:20px}
+/* HubSpot renderiza el form dentro de un iframe: su tipografía, colores y el texto
+   del botón se configuran desde HubSpot, no desde acá. La tarjeta blanca existe
+   para que el form quede legible sobre el fondo oscuro de esta sección. */
+.hs-form-frame{min-height:520px}
 footer{padding:30px 0;font-family:var(--font-ui);font-size:13px;color:var(--ink-3)}
 footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
 /* ============ responsive ============ */
 @media (max-width:1000px){
-  .hero__grid,.duo{grid-template-columns:1fr;gap:40px}
+  .hero__grid,.duo,.final__grid{grid-template-columns:1fr;gap:40px}
   .duo--flip .duo__fig{order:0}
   .cfg,.price{grid-template-columns:repeat(2,1fr)}
   .prob,.steps{grid-template-columns:1fr}
@@ -432,7 +438,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   <div class="nav__in">
     <a class="logo" href="#top" aria-label="Cliengo — inicio"><svg class="logo__svg" viewBox="0 0 730 190" role="img" aria-hidden="true"><use href="#cliengo-logo"/></svg></a>
     <span class="nav__tag">Vertical inmobiliario</span>
-    <div class="nav__cta"><a class="btn btn--primary" href="https://wa.me/5491159251652?text=Hola%2C%20vengo%20de%20la%20web%20de%20Cliengo%20para%20inmobiliarias%20y%20quiero%20saber%20m%C3%A1s%20%F0%9F%8F%A0" target="_blank" rel="noopener noreferrer">Agendar demo</a></div>
+    <div class="nav__cta"><a class="btn btn--primary" href="#demo">Agendar demo</a></div>
   </div>
 </nav>
 
@@ -444,7 +450,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <h1>El asesor que atiende <em>24/7</em>, mientras tu equipo muestra propiedades y cierra tratos.</h1>
       <p class="lede hero__lede">Un agente conversacional conectado a tu cartera. Responde al instante en WhatsApp, Web, Instagram y Facebook. Recomienda propiedades reales, califica al interesado y agenda la visita.</p>
       <div class="hero__cta">
-        <a class="btn btn--primary" href="https://wa.me/5491159251652?text=Hola%2C%20vengo%20de%20la%20web%20de%20Cliengo%20para%20inmobiliarias%20y%20quiero%20saber%20m%C3%A1s%20%F0%9F%8F%A0" target="_blank" rel="noopener noreferrer">Agendar demo<span class="msym">arrow_forward</span></a>
+        <a class="btn btn--primary" href="#demo">Agendar demo<span class="msym">arrow_forward</span></a>
       </div>
       <p class="hero__note"><span class="msym">bolt</span>Conecta tu cartera y en minutos está atendiendo.</p>
 
@@ -813,16 +819,22 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
 <!-- ========== CTA FINAL ========== -->
 <section class="final" id="demo">
-  <div class="wrap">
-    <svg class="final__logo" viewBox="0 0 730 190" role="img" aria-label="Cliengo"><use href="#cliengo-logo"/></svg>
-    <h2>Veamos cómo atendería tu cartera.</h2>
-    <p>Agenda 20 minutos con un especialista. Te mostramos el agente funcionando con propiedades como las tuyas y qué haría falta para conectarlo.</p>
-    <a class="btn btn--primary" href="https://wa.me/5491159251652?text=Hola%2C%20vengo%20de%20la%20web%20de%20Cliengo%20para%20inmobiliarias%20y%20quiero%20saber%20m%C3%A1s%20%F0%9F%8F%A0" target="_blank" rel="noopener noreferrer">Agendar demo<span class="msym">arrow_forward</span></a>
-    <div class="trust">
-      <span><span class="msym">verified</span>Meta Business Partner</span>
-      <span><span class="msym">workspace_premium</span>+9 años de experiencia conversacional</span>
-      <span><span class="msym">groups</span>Equipo LATAM en español</span>
-      <span><span class="msym">credit_card_off</span>Sin tarjeta para la demo</span>
+  <div class="wrap final__grid">
+    <div>
+      <svg class="final__logo" viewBox="0 0 730 190" role="img" aria-label="Cliengo"><use href="#cliengo-logo"/></svg>
+      <h2>Veamos cómo atendería tu cartera.</h2>
+      <p>Agenda 20 minutos con un especialista. Te mostramos el agente funcionando con propiedades como las tuyas y qué haría falta para conectarlo.</p>
+      <div class="trust">
+        <span><span class="msym">verified</span>Meta Business Partner</span>
+        <span><span class="msym">workspace_premium</span>+9 años de experiencia conversacional</span>
+        <span><span class="msym">groups</span>Equipo LATAM en español</span>
+        <span><span class="msym">credit_card_off</span>Sin tarjeta para la demo</span>
+      </div>
+    </div>
+    <div class="formcard">
+      <h3>Agenda tu demo</h3>
+      <p class="formcard__sub">Completa el formulario y un especialista te contacta.</p>
+      <div class="hs-form-frame" data-region="na1" data-form-id="d3f13e52-9558-4641-99d2-eb6f126fb600" data-portal-id="44736092"></div>
     </div>
   </div>
 </section>
@@ -1000,5 +1012,6 @@ const io = new IntersectionObserver((ents) => {
 }, {threshold:.25});
 io.observe(document.querySelector('.player'));
 </script>
+<script src="https://js.hsforms.net/forms/embed/44736092.js" defer></script>
 </body>
 </html>
